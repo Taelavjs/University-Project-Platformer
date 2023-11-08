@@ -36,9 +36,13 @@ public class PlayerMovement : MonoBehaviour
             rbPlayer.AddForce(Vector2.down * fallForce * Time.deltaTime, ForceMode2D.Force);
         }
 
-        rbPlayer.transform.Translate(Input.GetAxis("Horizontal") * normalSpeed * Vector2.right * Time.deltaTime);
 
 
+    }
+
+    private void FixedUpdate()
+    {
+        rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
