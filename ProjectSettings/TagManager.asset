@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Ground
   - Battery
+  - Death
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -48,4 +50,10 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 698434653
+    locked: 0
+  - name: Player
+    uniqueID: 827027165
     locked: 0

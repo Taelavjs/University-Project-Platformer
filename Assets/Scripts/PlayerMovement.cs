@@ -17,6 +17,16 @@ public class PlayerMovement : MonoBehaviour
     private float fallForce = 5f;
     // Start is called before the first frame update
 
+    [SerializeField]
+    private Vector3 lastFellPosition;
+    private Vector3 deathPosition;
+
+    public Transform groundCheckPosition;
+    [SerializeField]
+    private LayerMask whatIsGround;
+
+    private float airControl;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     void Start()
@@ -29,8 +39,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGroundCheck();
         animator.SetFloat("Speed", Mathf.Abs(rbPlayer.velocity.x));
         animator.SetFloat("Velocity", Mathf.Abs(rbPlayer.velocity.magnitude));
+
+        if (isGrounded)
+        {
+            animator.SetBool("isGrounded", true);
+            isJumping = false;
+        }
+
+        if (!isGrounded)
+        {
+            animator.SetBool("isGrounded", false);
+        }
 
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
@@ -40,9 +62,9 @@ public class PlayerMovement : MonoBehaviour
 
         if(rbPlayer.velocity.y < 2f && isJumping == true)
         {
-            Debug.Log("Woow");
             rbPlayer.AddForce(Vector2.down * fallForce * Time.deltaTime, ForceMode2D.Force);
         }
+
 
 
 
@@ -50,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
         if (rbPlayer.velocity.x < 0)
         {
@@ -62,24 +85,26 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Death"))
         {
-            isGrounded = true;
-            animator.SetBool("isGrounded", true);
-
-            isJumping = false;
+            Debug.Log("running");
+            gameObject.transform.position = lastFellPosition;
+            rbPlayer.velocity = new Vector2(0, 0);
+            rbPlayer.AddForce(Vector2.up * 40f, ForceMode2D.Impulse);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private bool wasGroundedPrev;
+    private void isGroundCheck()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        wasGroundedPrev = isGrounded;
+        isGrounded = Physics2D.OverlapCircle(groundCheckPosition.position, 0.1f, whatIsGround);
+        if(wasGroundedPrev == true && isGrounded == false)
         {
-            isGrounded = false;
-            animator.SetBool("isGrounded", false);
-
+            lastFellPosition = gameObject.transform.position;
         }
     }
+
 }
