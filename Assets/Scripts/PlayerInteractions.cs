@@ -19,12 +19,15 @@ public class PlayerInteractions : MonoBehaviour
 
     private Animator animator;
 
+    private PlayerAudio playerAudioManager;
+
     RaycastHit2D hit;
     // Start is called before the first frame update
     void Start()
     {
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerAudioManager = GetComponent<PlayerAudio>();
     }
 
     // Update is called once per frame
@@ -55,6 +58,7 @@ public class PlayerInteractions : MonoBehaviour
             rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
             rbPlayer.AddForce(Vector2.up * killJumpForce, ForceMode2D.Impulse);
             StartCoroutine(HitEnemy());
+            playerAudioManager.playHitSfx();
         }
     }
 
