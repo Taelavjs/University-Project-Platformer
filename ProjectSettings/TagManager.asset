@@ -8,6 +8,8 @@ TagManager:
   - Battery
   - Death
   - Enemy
+  - Environment
+  - PlayerBox
   layers:
   - Default
   - TransparentFX

@@ -17,7 +17,6 @@ public class CatHitBounce : StateMachineBehaviour
 
         rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
         rbPlayer.AddForce(Vector2.up * killJumpForce, ForceMode2D.Impulse);
-        hitSfxBouncing.pitch = 3f;
         hitSfxBouncing.Play();
     }
 

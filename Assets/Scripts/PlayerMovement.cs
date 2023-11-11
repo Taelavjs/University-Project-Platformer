@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (fallForceApplied == false && rbPlayer.velocity.y < -1f)
+        if (fallForceApplied == false && rbPlayer.velocity.y < -1f && isJumping == true)
         {
             //rbPlayer.AddForce(Vector2.down * fallForce * Time.deltaTime, ForceMode2D.Impulse);
             rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, -fallForce);

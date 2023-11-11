@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerInteractions : MonoBehaviour
 {
+
     private Rigidbody2D rbPlayer;
     [SerializeField]
     private float dashAttackRange;
@@ -22,26 +25,31 @@ public class PlayerInteractions : MonoBehaviour
 
     private PlayerAudio playerAudioManager;
 
+    public Light2D light;
+
     RaycastHit2D hit;
     public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
+
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerAudioManager = GetComponent<PlayerAudio>();
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        light.intensity = 3f;
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Physics2D.Raycast(transform.position, Vector2.down, dashAttackRange, enemyMask))
         {
-            
+            light.intensity = 15f;
 
-            if (Physics2D.Raycast(transform.position, Vector2.down, dashAttackRange, enemyMask))
+            if (Input.GetKeyDown(KeyCode.F))
                 {
+                rbPlayer.velocity = Vector2.zero;
                     rbPlayer.AddForce(Vector2.down * stompForce, ForceMode2D.Impulse);
 
                 animator.SetTrigger("Dive");
@@ -55,18 +63,15 @@ public class PlayerInteractions : MonoBehaviour
     public Transform groundCheckPosition;
     public float enemyHitAttack;
     public float yangleFlyBack;
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         isEnemyBelow = Physics2D.OverlapCircle(groundCheckPosition.position, 0.3f, enemyMask);
 
-        if (isEnemyBelow)
+        if (isEnemyBelow || collision.gameObject.CompareTag("Enemy"))
         {
             animator.SetTrigger("EnemyBounce");
-        } else if(collision.gameObject.CompareTag("Enemy"))
-        {
-            rbPlayer.AddForce((transform.position - collision.gameObject.transform.position + new Vector3(0, yangleFlyBack, 0)).normalized * enemyHitAttack, ForceMode2D.Impulse);
-            StartCoroutine(gameManager.playerHitStun());
-        }
+        } 
 
     }
 
