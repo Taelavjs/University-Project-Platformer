@@ -78,6 +78,11 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void LateUpdate()
+    {
+        rbPlayer.velocity = new Vector2(Mathf.Clamp(rbPlayer.velocity.x, -10f, 10f), rbPlayer.velocity.y);
+    }
+
     private void FixedUpdate()
     {
 

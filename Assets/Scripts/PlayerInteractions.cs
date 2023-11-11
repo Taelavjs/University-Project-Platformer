@@ -62,7 +62,6 @@ public class PlayerInteractions : MonoBehaviour
         if (isEnemyBelow)
         {
             animator.SetTrigger("EnemyBounce");
-            Destroy(collision.gameObject);
         } else if(collision.gameObject.CompareTag("Enemy"))
         {
             rbPlayer.AddForce((transform.position - collision.gameObject.transform.position + new Vector3(0, yangleFlyBack, 0)).normalized * enemyHitAttack, ForceMode2D.Impulse);

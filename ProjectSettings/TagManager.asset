@@ -19,8 +19,8 @@ TagManager:
   - PP
   - PopEnemy
   - 
-  - 
-  - 
+  - Player
+  - Front
   - 
   - 
   - 
@@ -56,4 +56,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 827027165
+    locked: 0
+  - name: Front
+    uniqueID: 763504863
     locked: 0
