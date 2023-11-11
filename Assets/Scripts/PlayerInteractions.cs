@@ -11,6 +11,7 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField]
     private LayerMask enemyMask;
 
+
     [SerializeField]
     float stompForce;
 
@@ -22,6 +23,7 @@ public class PlayerInteractions : MonoBehaviour
     private PlayerAudio playerAudioManager;
 
     RaycastHit2D hit;
+    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,39 +43,35 @@ public class PlayerInteractions : MonoBehaviour
             if (Physics2D.Raycast(transform.position, Vector2.down, dashAttackRange, enemyMask))
                 {
                     rbPlayer.AddForce(Vector2.down * stompForce, ForceMode2D.Impulse);
-                
-                StartCoroutine(DashAttackAnimation());
+
+                animator.SetTrigger("Dive");
             }
 
 
         }
 
     }
-
+    bool isEnemyBelow = false;
+    public Transform groundCheckPosition;
+    public float enemyHitAttack;
+    public float yangleFlyBack;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        isEnemyBelow = Physics2D.OverlapCircle(groundCheckPosition.position, 0.3f, enemyMask);
+
+        if (isEnemyBelow)
         {
+            animator.SetTrigger("EnemyBounce");
             Destroy(collision.gameObject);
-            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
-            rbPlayer.AddForce(Vector2.up * killJumpForce, ForceMode2D.Impulse);
-            StartCoroutine(HitEnemy());
-            playerAudioManager.playHitSfx();
+        } else if(collision.gameObject.CompareTag("Enemy"))
+        {
+            rbPlayer.AddForce((transform.position - collision.gameObject.transform.position + new Vector3(0, yangleFlyBack, 0)).normalized * enemyHitAttack, ForceMode2D.Impulse);
+            StartCoroutine(gameManager.playerHitStun());
         }
-    }
-
-    IEnumerator DashAttackAnimation()
-    {
-        animator.SetBool("isStomp", true);
-        yield return new WaitForSeconds(0.8f);
-        animator.SetBool("isStomp", false);
 
     }
 
-    IEnumerator HitEnemy()
-    {
-        animator.SetBool("enemyHit", true);
-        yield return new WaitForSeconds(0.5f);
-        animator.SetBool("enemyHit", false);
-    }
+
+
+
 }

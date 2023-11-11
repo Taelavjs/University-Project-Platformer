@@ -29,6 +29,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
+    public GameManager gameManager;
+
+    bool fallForceApplied;
     void Start()
     {
         animator = GetComponent<Animator>();   
@@ -47,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isGrounded", true);
             isJumping = false;
+            fallForceApplied = false;
         }
 
         if (!isGrounded)
@@ -60,11 +65,14 @@ public class PlayerMovement : MonoBehaviour
             isJumping = true;
         }
 
-        if(rbPlayer.velocity.y < 2f && isJumping == true)
-        {
-            rbPlayer.AddForce(Vector2.down * fallForce * Time.deltaTime, ForceMode2D.Force);
-        }
 
+        if (fallForceApplied == false && rbPlayer.velocity.y < -1f)
+        {
+            //rbPlayer.AddForce(Vector2.down * fallForce * Time.deltaTime, ForceMode2D.Impulse);
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, -fallForce);
+            fallForceApplied = true;
+
+        }
 
 
 
@@ -73,8 +81,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
 
-        rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
-        if (rbPlayer.velocity.x < 0)
+        if(!gameManager.hitStun)
+        {
+            rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
+        }
+
+        if (Input.GetAxis("Horizontal") < 0)
         {
             spriteRenderer.flipX = true;
         }
