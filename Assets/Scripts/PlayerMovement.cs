@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0f);
             rbPlayer.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isJumping = true;
         }
