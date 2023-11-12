@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
+            gameManager.resetKillCombo();
             animator.SetBool("isGrounded", true);
             isJumping = false;
             fallForceApplied = false;
@@ -77,10 +78,16 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-
+    public float deacceleration;
+    public float maxSpeed;
     private void LateUpdate()
     {
-        rbPlayer.velocity = new Vector2(Mathf.Clamp(rbPlayer.velocity.x, -10f, 10f), rbPlayer.velocity.y);
+        rbPlayer.velocity = new Vector2(Mathf.Clamp(rbPlayer.velocity.x, -maxSpeed, maxSpeed), rbPlayer.velocity.y);
+
+        if(Input.GetAxis("Horizontal") == 0)
+        {
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x * deacceleration, rbPlayer.velocity.y);
+        }
     }
 
     private void FixedUpdate()
@@ -88,7 +95,9 @@ public class PlayerMovement : MonoBehaviour
 
         if(!gameManager.hitStun)
         {
-            rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
+            //rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
+            rbPlayer.AddForce(Vector2.right * Input.GetAxis("Horizontal") * normalSpeed);
+
         }
 
         if (Input.GetAxis("Horizontal") < 0)
@@ -106,10 +115,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Death"))
         {
-            Debug.Log("running");
-            gameObject.transform.position = lastFellPosition;
-            rbPlayer.velocity = new Vector2(0, 0);
-            rbPlayer.AddForce(Vector2.up * 40f, ForceMode2D.Impulse);
+            gameManager.GetComponent<GameManager>().SetStateRespawn();
+            animator.SetTrigger("Death");
+        }
+
+        if (collision.gameObject.CompareTag("Snow"))
+        {
+            lastFellPosition = collision.transform.position;
         }
     }
 
@@ -118,10 +130,17 @@ public class PlayerMovement : MonoBehaviour
     {
         wasGroundedPrev = isGrounded;
         isGrounded = Physics2D.OverlapCircle(groundCheckPosition.position, 0.1f, whatIsGround);
-        if(wasGroundedPrev == true && isGrounded == false)
-        {
-            lastFellPosition = gameObject.transform.position;
-        }
+
     }
+
+    public void RespawnPlayer()
+    {
+        Debug.Log("running");
+        gameObject.transform.position = lastFellPosition;
+        rbPlayer.velocity = new Vector2(0, 0);
+        rbPlayer.AddForce(Vector2.up * 40f, ForceMode2D.Impulse);
+    }
+
+
 
 }

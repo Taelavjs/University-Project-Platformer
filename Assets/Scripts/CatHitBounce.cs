@@ -7,16 +7,30 @@ public class CatHitBounce : StateMachineBehaviour
     Rigidbody2D rbPlayer;
     [SerializeField]
     AudioSource hitSfxBouncing;
+    AudioSource[] sources;
     [SerializeField]
     float killJumpForce;
+
+    GameManager gameManager;
+    public float pitchIncrease;
+
+    private float originalPitch;
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
+        sources = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
+        hitSfxBouncing = sources[0];
         rbPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         hitSfxBouncing = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
 
         rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0);
         rbPlayer.AddForce(Vector2.up * killJumpForce, ForceMode2D.Impulse);
+
+        originalPitch = hitSfxBouncing.pitch;
+
+        hitSfxBouncing.pitch += gameManager.getKillCombo() * pitchIncrease;
         hitSfxBouncing.Play();
     }
 
@@ -32,6 +46,8 @@ public class CatHitBounce : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.ResetTrigger("EnemyBounce");
+        hitSfxBouncing.pitch = originalPitch;
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

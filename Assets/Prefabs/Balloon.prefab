@@ -154,6 +154,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 8251815245736946348}
     m_Modifications:
     - target: {fileID: 5240539748488486540, guid: f82e4dcc5e2d47e459d818613f31b0ae, type: 3}
+      propertyPath: stopAction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240539748488486540, guid: f82e4dcc5e2d47e459d818613f31b0ae, type: 3}
       propertyPath: TrailModule.enabled
       value: 0
       objectReference: {fileID: 0}

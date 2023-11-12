@@ -20,4 +20,9 @@ public class PlayerAudio : MonoBehaviour
     {
         audioSource.Play();
     }
+
+    public void increasePitch(float comboKill)
+    {
+        audioSource.pitch += (comboKill * 0.1f);
+    }
 }

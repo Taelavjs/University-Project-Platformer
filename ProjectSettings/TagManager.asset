@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Environment
   - PlayerBox
+  - Snow
   layers:
   - Default
   - TransparentFX

@@ -7,35 +7,48 @@ public class Balloon : MonoBehaviour
 {
     public float damage { get; set; }
     public ParticleSystem popVfx;
+
+    BoxCollider2D bCol;
+    SpriteRenderer sprender;
     // Start is called before the first frame update
     void Start()
     {
-        
+        bCol = gameObject.GetComponent<BoxCollider2D>();
+        sprender = gameObject.GetComponent<SpriteRenderer>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        iTween.ShakePosition(gameObject, new Vector3(0.1f, 0.1f, 0f), 0.1f);
+
     }
 
-    
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             popVfx.Play();
-            SpriteRenderer sprender = gameObject.GetComponent<SpriteRenderer>();
             sprender.enabled = false;
-            BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();
             bCol.enabled = false;
-            Destroy(gameObject, 2f);
 
 
         }
 
         
+    }
+
+
+
+    public void setActive()
+    {
+        gameObject.SetActive(true);
+        sprender.enabled = true;
+        bCol.enabled = true;
+
     }
 
 

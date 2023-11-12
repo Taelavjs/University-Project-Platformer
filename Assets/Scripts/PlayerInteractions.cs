@@ -29,6 +29,7 @@ public class PlayerInteractions : MonoBehaviour
 
     RaycastHit2D hit;
     public GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +71,8 @@ public class PlayerInteractions : MonoBehaviour
 
         if (isEnemyBelow || collision.gameObject.CompareTag("Enemy"))
         {
+
+            gameManager.increaseKillCombo();
             animator.SetTrigger("EnemyBounce");
         } 
 
