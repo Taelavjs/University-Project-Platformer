@@ -56,11 +56,11 @@ public class PlayerInteractions : MonoBehaviour
             bufferInputTime -= Time.deltaTime;
         }
 
-        light.intensity = 3f;
+        light.intensity = 0f;
 
         if (Physics2D.Raycast(transform.position, Vector2.down, dashAttackRange, enemyMask))
         {
-            light.intensity = 15f;
+            light.intensity = 30f;
 
             if (bufferInputTime > 0)
             {

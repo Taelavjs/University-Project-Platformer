@@ -33,7 +33,7 @@ public class Balloon : MonoBehaviour
             popVfx.Play();
             sprender.enabled = false;
             bCol.enabled = false;
-
+            Invoke("setActive", 2f);
 
         }
 

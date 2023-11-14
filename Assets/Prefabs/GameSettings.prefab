@@ -47,6 +47,7 @@ MonoBehaviour:
   hitStun: 0
   hitstunTime: 0.1
   balloon: {fileID: 0}
+  bufferInput: 0.3
   respawningEnemiesContainer: {fileID: 0}
   playerMovement: {fileID: 0}
   killCombo: 0

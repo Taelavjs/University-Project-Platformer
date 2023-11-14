@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameManager gameManager;
 
+
     public bool fallForceApplied;
 
     float originalBuffer;
