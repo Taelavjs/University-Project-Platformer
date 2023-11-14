@@ -29,31 +29,46 @@ public class PlayerInteractions : MonoBehaviour
 
     RaycastHit2D hit;
     public GameManager gameManager;
+    public Transform Camera;
 
+    public Vector3 camShakeVector;
+    public float shakeTime;
+
+    float originalBuffer;
+    float bufferInputTime = 0;
     // Start is called before the first frame update
     void Start()
     {
-
+        originalBuffer = gameManager.bufferInput;
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerAudioManager = GetComponent<PlayerAudio>();
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            bufferInputTime = originalBuffer;
+        } else
+        {
+            bufferInputTime -= Time.deltaTime;
+        }
+
         light.intensity = 3f;
 
         if (Physics2D.Raycast(transform.position, Vector2.down, dashAttackRange, enemyMask))
         {
             light.intensity = 15f;
 
-            if (Input.GetKeyDown(KeyCode.F))
-                {
-                rbPlayer.velocity = Vector2.zero;
-                    rbPlayer.AddForce(Vector2.down * stompForce, ForceMode2D.Impulse);
-
+            if (bufferInputTime > 0)
+            {
                 animator.SetTrigger("Dive");
+                //rbPlayer.AddForce(Vector2.down * stompForce, ForceMode2D.Impulse);
+                rbPlayer.velocity = new Vector2(0, stompForce);
+                iTween.ShakePosition(Camera.gameObject, new Vector3(0.1f, 0.1f, 0f), 0.25f);
+                
             }
 
 
@@ -72,10 +87,16 @@ public class PlayerInteractions : MonoBehaviour
         if (isEnemyBelow || collision.gameObject.CompareTag("Enemy"))
         {
 
+            iTween.ShakePosition(Camera.gameObject, camShakeVector, shakeTime);
             gameManager.increaseKillCombo();
             animator.SetTrigger("EnemyBounce");
-        } 
+        }
 
+
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            gameManager.nextLevel();
+        }
     }
 
 

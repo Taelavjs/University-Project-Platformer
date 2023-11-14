@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public bool hitStun;
     public float hitstunTime;
     public GameObject balloon;
+    public float bufferInput;
 
     private enum State
     {
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         hitStun = false;
+        scene = SceneManager.GetActiveScene();
 
 
     }
@@ -50,11 +53,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator playerHitStun()
+    private IEnumerator playerHitStun()
     {
         hitStun = true;
         yield return new WaitForSeconds(hitstunTime);
         hitStun = false;
+    }
+
+    public void triggerHitstun()
+    {
+        StartCoroutine("playerHitStun");
     }
 
     public void SetStateRespawn()
@@ -85,5 +93,14 @@ public class GameManager : MonoBehaviour
         return killCombo;
     }
 
+    Scene scene;
+    int currentScene;
+    // Start is called before the first frame update
+
+
+    public void nextLevel()
+    {
+        SceneManager.LoadScene(currentScene + 1, LoadSceneMode.Single);
+    }
 
 }

@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float jumpForce = 5f;
     [SerializeField]
     private bool isGrounded = false;
+    [SerializeField]
     private bool isJumping = false;
     [SerializeField]
     private float fallForce = 5f;
@@ -32,9 +33,15 @@ public class PlayerMovement : MonoBehaviour
 
     public GameManager gameManager;
 
-    bool fallForceApplied;
+    public bool fallForceApplied;
+
+    float originalBuffer;
+    float bufferInputTime = 0;
+
     void Start()
     {
+        originalBuffer = gameManager.bufferInput;
+
         animator = GetComponent<Animator>();   
         spriteRenderer = GetComponent<SpriteRenderer>();
         rbPlayer = GetComponent<Rigidbody2D>();
@@ -43,6 +50,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            bufferInputTime = originalBuffer;
+        }
+        else
+        {
+            bufferInputTime -= Time.deltaTime;
+        }
+
         isGroundCheck();
         animator.SetFloat("Speed", Mathf.Abs(rbPlayer.velocity.x));
         animator.SetFloat("Velocity", Mathf.Abs(rbPlayer.velocity.magnitude));
@@ -60,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isGrounded", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded)
+        if (bufferInputTime > 0 && isGrounded)
         {
             rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, 0f);
             rbPlayer.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
