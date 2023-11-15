@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,8 +30,10 @@ public class GameManager : MonoBehaviour
 
     private int frScene;
 
-    // Start is called before the first frame update
-    void Start()
+
+
+// Start is called before the first frame update
+void Start()
     {
         hitStun = false;
         frScene = SceneManager.GetActiveScene().buildIndex;
@@ -53,6 +58,8 @@ public class GameManager : MonoBehaviour
             case State.Paused:
                 break;
         }
+
+
     }
 
     private IEnumerator playerHitStun()
@@ -95,8 +102,7 @@ public class GameManager : MonoBehaviour
         return killCombo;
     }
 
-    Scene scene;
-    int currentScene;
+
     // Start is called before the first frame update
 
 

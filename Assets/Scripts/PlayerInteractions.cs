@@ -97,6 +97,8 @@ public class PlayerInteractions : MonoBehaviour
         {
             gameManager.nextLevel();
         }
+
+        
     }
 
 

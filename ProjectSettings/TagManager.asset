@@ -12,6 +12,8 @@ TagManager:
   - PlayerBox
   - Snow
   - Goal
+  - Projectile
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - 
   - Player
   - Front
-  - 
+  - Projectile
   - 
   - 
   - 
