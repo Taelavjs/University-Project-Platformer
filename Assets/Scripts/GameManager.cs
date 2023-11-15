@@ -25,11 +25,13 @@ public class GameManager : MonoBehaviour
 
     public int killCombo;
 
+    private int frScene;
+
     // Start is called before the first frame update
     void Start()
     {
         hitStun = false;
-        scene = SceneManager.GetActiveScene();
+        frScene = SceneManager.GetActiveScene().buildIndex;
 
 
     }
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     public void nextLevel()
     {
-        SceneManager.LoadScene(currentScene + 1, LoadSceneMode.Single);
+        SceneManager.LoadScene(frScene + 1, LoadSceneMode.Single);
     }
 
 }
