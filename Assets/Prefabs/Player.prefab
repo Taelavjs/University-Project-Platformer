@@ -288,7 +288,6 @@ GameObject:
   - component: {fileID: 631187016864554819}
   - component: {fileID: 2148827770894061678}
   - component: {fileID: 7247049571810249766}
-  - component: {fileID: 7629346367951482539}
   - component: {fileID: 8340689527602258445}
   - component: {fileID: 6058326040736914480}
   - component: {fileID: 8397884273104850454}
@@ -393,41 +392,26 @@ MonoBehaviour:
   isGrounded: 1
   isJumping: 0
   fallForce: 6
-  lastFellPosition: {x: 99.7106, y: -1.9099623, z: 0}
-  groundCheckPosition: {fileID: 2285796439693544358}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
+  stompForce: 0
+  dashAttackRange: 0
   gameManager: {fileID: 0}
+  groundCheckPosition: {fileID: 2285796439693544358}
+  light: {fileID: 0}
+  Camera: {fileID: 0}
+  camShakeVector: {x: 0, y: 0, z: 0}
+  shakeTime: 0
   fallForceApplied: 0
   deacceleration: 0.11
   maxSpeed: 7
---- !u!114 &7629346367951482539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6720756056374512150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3823fa8b2c251c14ab7c8bd63967e830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashAttackRange: 8
+  lastFellPosition: {x: 99.7106, y: -1.9099623, z: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
   enemyMask:
     serializedVersion: 2
-    m_Bits: 256
-  stompForce: -45
-  killJumpForce: 14
-  light: {fileID: 7503813800151724320}
-  gameManager: {fileID: 0}
-  Camera: {fileID: 0}
-  camShakeVector: {x: 0.4, y: 0.4, z: 0}
-  shakeTime: 0.25
-  groundCheckPosition: {fileID: 2285796439693544358}
-  enemyHitAttack: 25
-  yangleFlyBack: 6
+    m_Bits: 0
+  playerAudioManager: {fileID: 0}
+  killCombo: 0
 --- !u!50 &8340689527602258445
 Rigidbody2D:
   serializedVersion: 4
@@ -481,7 +465,7 @@ MonoBehaviour:
   - {x: 1.1999998, y: -1.2, z: 0}
   m_ShapePathHash: -1627810142
   m_Mesh: {fileID: 0}
-  m_InstanceId: -367772
+  m_InstanceId: 59110
   m_LocalBounds:
     m_Center: {x: 0.037748814, y: 0, z: 0}
     m_Extent: {x: 1.162251, y: 1.2, z: 0}

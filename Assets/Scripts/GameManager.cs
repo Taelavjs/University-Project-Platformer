@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,12 +20,10 @@ public class GameManager : MonoBehaviour
         Paused,
     }
 
-    public EnemyRespawnManager respawningEnemiesContainer;
 
     private State state;
     public PlayerMovement playerMovement;
 
-    public int killCombo;
 
     private int frScene;
 
@@ -52,7 +49,7 @@ void Start()
                 break;
             case State.PlayerRespawn:
                 playerMovement.RespawnPlayer();
-                respawningEnemiesContainer.triggerRespawn();
+//                respawningEnemiesContainer.triggerRespawn();
                 setStatePlaying();
                 break;
             case State.Paused:
@@ -87,20 +84,7 @@ void Start()
     }
 
     
-    public void increaseKillCombo()
-    {
-        killCombo++;
-    }
 
-    public void resetKillCombo()
-    {
-        killCombo = 0;
-    }
-
-    public int getKillCombo()
-    {
-        return killCombo;
-    }
 
 
     // Start is called before the first frame update
