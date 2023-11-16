@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             if (bufferInputTimeF > 0)
             {
                 animator.SetTrigger("Dive");
-                //rbPlayer.AddForce(Vector2.down * stompForce, ForceMode2D.Impulse);
+                rbPlayer.AddForce(Vector2.down * stompForce, ForceMode2D.Impulse);
                 rbPlayer.velocity = new Vector2(0, stompForce);
                 iTween.ShakePosition(Camera.gameObject, new Vector3(0.1f, 0.1f, 0f), 0.25f);
 
