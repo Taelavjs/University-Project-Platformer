@@ -212,6 +212,8 @@ public class PlayerMovement : MonoBehaviour
         {
             gameManager.nextLevel();
         }
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -23,5 +23,6 @@ public class PlayerHealth : MonoBehaviour
     public void hit()
     {
         health -= 1;
+        iTween.ShakePosition(gameObject, new Vector3(1f, 1f, 0f), 0.2f);
     }
 }

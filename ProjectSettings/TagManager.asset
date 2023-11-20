@@ -14,6 +14,7 @@ TagManager:
   - Goal
   - Projectile
   - Boss
+  - Laser
   layers:
   - Default
   - TransparentFX
