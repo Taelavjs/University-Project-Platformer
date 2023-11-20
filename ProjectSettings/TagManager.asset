@@ -15,6 +15,7 @@ TagManager:
   - Projectile
   - Boss
   - Laser
+  - Haunt
   layers:
   - Default
   - TransparentFX

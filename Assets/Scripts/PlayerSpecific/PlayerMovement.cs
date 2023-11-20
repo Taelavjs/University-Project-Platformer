@@ -166,6 +166,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
 
+
+
         if(!gameManager.hitStun)
         {
             //rbPlayer.velocity = new Vector2(Input.GetAxis("Horizontal") * normalSpeed, rbPlayer.velocity.y);
